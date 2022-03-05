@@ -1,0 +1,7 @@
+{
+  "name": "delta-bigo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
