@@ -1,96 +1,100 @@
+import { FC } from 'react';
+
 import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonThumbnail,
   IonContent,
   IonIcon,
+  IonImg,
   IonItem,
   IonLabel,
   IonList,
   IonListHeader,
   IonMenu,
   IonMenuToggle,
-  IonNote,
+  IonNote
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { 
+  hammerOutline, 
+  musicalNotesOutline, 
+  walletOutline, 
+  sparklesOutline,
+  personCircleOutline
+} from 'ionicons/icons';
+
 import './Menu.css';
 
 interface AppPage {
   url: string;
-  iosIcon: string;
-  mdIcon: string;
+  icon: string;
   title: string;
 }
 
 const appPages: AppPage[] = [
   {
-    title: 'Inbox',
-    url: '/page/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
+    title: 'Lyrics',
+    url: '/lyric',
+    icon: musicalNotesOutline
   },
   {
-    title: 'Outbox',
-    url: '/page/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
+    title: 'Hardware',
+    url: '/hardware',
+    icon: hammerOutline
   },
   {
-    title: 'Favorites',
-    url: '/page/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp
+    title: 'Waifu',
+    url: '/waifu',
+    icon: sparklesOutline
   },
   {
-    title: 'Archived',
-    url: '/page/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
+    title: 'Crypto',
+    url: '/crypto',
+    icon: walletOutline
   },
   {
-    title: 'Trash',
-    url: '/page/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
-  },
-  {
-    title: 'Spam',
-    url: '/page/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
+    title: 'About',
+    url: '/about',
+    icon: personCircleOutline
   }
 ];
 
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-
-const Menu: React.FC = () => {
+const Menu: FC = () => {
   const location = useLocation();
 
   return (
     <IonMenu contentId="main" type="overlay">
+      <IonHeader>
+        <IonToolbar color="light" class="ion-text-center ion-padding-vertical">
+          <IonThumbnail className="horizontal">
+            <IonImg src="/assets/icon/icon.png" alt="logo" />
+          </IonThumbnail>
+          <IonTitle className="title">stack dino</IonTitle>
+          <IonNote color="secondary">creado por omega5300</IonNote>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
-        <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
+        <IonList className="inbox-list">
+          <IonListHeader class="ion-padding-bottom">herramientas</IonListHeader>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                  <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
+                <IonItem 
+                  className={location.pathname === appPage.url ? 'selected' : ''} 
+                  routerLink={appPage.url} 
+                  routerDirection="none" 
+                  lines="none" 
+                  detail={false}
+                >
+                  <IonIcon color="dark" slot="start" icon={appPage.icon} />
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>
               </IonMenuToggle>
             );
           })}
-        </IonList>
-
-        <IonList id="labels-list">
-          <IonListHeader>Labels</IonListHeader>
-          {labels.map((label, index) => (
-            <IonItem lines="none" key={index}>
-              <IonIcon slot="start" icon={bookmarkOutline} />
-              <IonLabel>{label}</IonLabel>
-            </IonItem>
-          ))}
         </IonList>
       </IonContent>
     </IonMenu>

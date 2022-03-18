@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'delta-bigo',
+  appId: 'com.stack-analyze.stack-dino',
+  appName: 'stack-dino',
   webDir: 'build',
   bundledWebRuntime: false
 };
