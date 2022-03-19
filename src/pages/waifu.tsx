@@ -16,7 +16,7 @@ import Toolbar from '../components/Toolbar';
 
 // https://api.waifu.im/random/?selected_tags=oppai
 const imgStyle = {
-  height: '480px',
+  height: '380px',
   display: 'block',
   marginInline: 'auto'
 };
@@ -56,20 +56,19 @@ const Waifu: FC = () => {
     setSelectedValue('')
   };
   
-  const downloadImg = async (url: string) => {
-   try {
-     const res = await fetch(url, {
-       mode: 'no-cors'
-     });
-     
-     const imageBlog = await res.blob()
-     
-     console.info(imageBlog)
-     
-     /* const a = document.createElement("a");
-     a.href = imageURL
-     */
-   } catch (err) {
+  const downloadImg = async (url: string, name: string, extension: string) => {
+    try {
+      const res = await fetch(url, {
+        mode: 'no-cors'
+      })
+
+      const blob = await res.blob();
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = name + extension;
+      link.click();
+    } catch(err) {
       setMsg(err);
       setShowToast(true);
     }
@@ -95,12 +94,18 @@ const Waifu: FC = () => {
             <img src={waifuContent.url} alt={waifuContent.image_id} style={imgStyle} />
             <IonButton 
               expand="block"
-              onClick={() => downloadImg(waifuContent.url)}
+              onClick={() => downloadImg(waifuContent.url, waifuContent.file, waifuContent.extension)}
             >
               Descargar Imagen
             </IonButton>
           </IonCardContent>
         </IonCard>
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message={msg}
+          duration={2000}
+        />
       </IonContent>
     </IonPage>
   );
